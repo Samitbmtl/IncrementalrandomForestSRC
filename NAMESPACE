@@ -1,0 +1,112 @@
+useDynLib(IncrementalrandomForestSRC, .registration = TRUE)
+
+importFrom("parallel", mclapply)
+importFrom("randomForestSRC", rfsrc)
+importFrom("graphics", "abline", "axis", "box", "boxplot", "bxp",
+           "legend", "lines", "matlines", "matplot", "mtext", "par", "plot",
+           "plot.new", "plot.window", "points", "rug", "segments",
+           "strwidth", "text", "title", "grconvertX", "grconvertY", "plot.default")
+importFrom("stats", "as.dist", "as.formula", "cutree", "dlnorm", "formula",
+           "hclust", "lowess", "median", "model.matrix", "na.omit",
+           "optim", "pgamma", "plnorm", "pnorm", "predict", 
+           "quantile", "qnorm", "runif", "sd", "supsmu", "var", "wilcox.test")
+importFrom("utils", "installed.packages", "txtProgressBar", "setTxtProgressBar",
+           "write.table", "tail")
+importFrom("grDevices", "gray")
+
+export(#extract.bootsample,
+       #extract.quantile,
+       #extract.subsample,
+       #find.interaction,
+       find.interaction.irfsrc,
+       #get.auc,
+       #get.bayes.rule,
+       #get.brier.error,       
+       #get.cindex,
+       #get.confusion,
+       #get.misclass.error,
+       #get.mv.error,
+       #get.mv.error.block,
+       #get.mv.formula,
+       #get.mv.predicted,
+       #get.mv.vimp,
+       #get.quantile,
+       #get.quantile.crps,
+       #get.quantile.stat,
+        
+       #holdout.vimp,
+       holdout.vimp.irfsrc,
+       #imbalanced,
+       imbalanced.irfsrc,
+       #impute,       
+       impute.irfsrc,
+       #max.subtree,
+       max.subtree.irfsrc,
+       #partial,
+       partial.irfsrc,
+       #plot.competing.risk,
+       plot.competing.risk.irfsrc,
+       #plot.quantreg,
+       plot.quantreg.irfsrc,
+       plot.irfsrc,
+       #plot.subsample,
+       plot.subsample.irfsrc,       
+       #plot.survival,
+       plot.survival.irfsrc,
+       #plot.variable,
+       plot.variable.irfsrc,       
+       predict.irfsrc,
+       predict.irfsrc_old,
+       print.irfsrc,
+       #quantreg,
+       quantreg.irfsrc,
+       irfsrc,
+       irfsrc.cart,
+       irfsrc.fast,
+       irfsrc.news,
+       #synthetic,
+       synthetic.irfsrc,
+       HET,
+       CMB,
+       HETSurv,
+       HETMaxQuad,
+       iextractBBOPid,
+       iextractBBOP,
+       #iextractBeta,
+	     #get.max.effect,
+       #subsample,
+       subsample.irfsrc,
+       #stat.split,
+       stat.split.irfsrc,
+       #tune,
+       tune.irfsrc,
+       #tune.nodesize,
+       tune.nodesize.irfsrc,
+       #var.select,
+       var.select.irfsrc,
+       #vimp,
+       vimp.irfsrc)
+
+
+#S3method(max, subtree)
+S3method(max, subtree.irfsrc)
+
+##S3method(plot, competing.risk)
+#S3method(plot, competing.risk.irfsrc)
+##S3method(plot, quantreg)
+#S3method(plot, quantreg.irfsrc)
+#S3method(plot, irfsrc)
+##S3method(plot, subsample)
+#S3method(plot, subsample.irfsrc)
+##S3method(plot, survival)
+#S3method(plot, survival.irfsrc)
+##S3method(plot, variable)
+#S3method(plot, variable.irfsrc)
+
+S3method(predict, irfsrc)
+
+S3method(print, irfsrc)
+
+
+
+

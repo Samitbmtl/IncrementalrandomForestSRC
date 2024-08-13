@@ -1,0 +1,13 @@
+Package: IncrementalrandomForestSRC
+Version: 1.0.0
+Date: 2024-08-01
+Title: Incremental Random Forests (IRF-SRC)
+Author: Sami Tabib <sami.tabib@hec.ca>
+Maintainer: Sami Tabib <sami.tabib@hec.ca>
+BugReports: 
+Depends: R (>= 3.5.0),
+Imports: parallel, survival, randomForestSRC
+Suggests: pec, prodlim, mlbench, akima, caret, imbalance  
+Description: Set of functions for incremental modeling with random forest.
+License: GPL (>=3)
+URL: 

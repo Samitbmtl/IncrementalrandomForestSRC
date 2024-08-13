@@ -1,0 +1,44 @@
+1            3864.90363
+4         2 -1954.71880
+6         3 -1954.71880
+8         4 -3181.73733
+10        5  4418.39279
+12        6  4418.39279
+14        7  2154.18583
+16        8 -1954.71880
+17        9  4418.39279
+20       10 -1954.71880
+22       11  2154.18583
+24       12 -1954.71880
+25       13  4418.39279
+28       14  2154.18583
+30       15 -3181.73733
+32       16  7093.13622
+34       17 -1954.71880
+
+
+3864.90363 
+-1954.71880 
+-1954.71880 
+-3181.73733  
+4418.39279  
+4418.39279
+
+
+2 choses qui reste a confirmer :
+     1 - l'affaire de T sorted ou non.
+	 2 - l'affaire du max category. on ajoute un table distinct sorted.
+	 
+	 
+	 
+multi foret
+- 4 foret et faire les différence avec le controle
+- 3 foret (comme notre methode article 1)
+
+
+mono foret
+- rf src avec traitement comme covariable
+faire appel n traitement pour les test
+faire la différnce pour avoir les pred
+
+- notre nouvelle methode
