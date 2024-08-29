@@ -46,7 +46,23 @@ Maximum proportion of treatment observations in each node. Should be between Tre
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+
+When making prediction with this method, there is 2 arguments that could be used :
+
+OOB = TRUE or FALSE\cr
+This argument define how the Big Bag of prediction (BBOP) will be constitued. 
+Let's remember that a Bag of prediction (BOP) is the formed by the training observationa of the terminal node where a predicted observation falls in the tree. For a forest, we have multiple trees, so multiple BOP, this is what we call Big Bag of prediction (BBOP).
+for more information about the BBOP, please refer to https://academic.oup.com/bioinformatics/article/36/2/629/5542949\cr
+If OOB = TRUE, the package will use only the tree's out of bag observations to constitue the BBOP.   \cr
+If OOB = FALSE, the package will use the InBag observations to constitute the BBOP. 
+
+
+obsUniqueInTree = TRUE or FALSE\cr 
+This argument is used to define how the package manage repetitions in the BBOP.
+For each tree, we have a BOP where the predicted observations falls in the tree.\cr
+If obsUniqueInTree = TRUE, the package will only keep one repetition of a training observation in the dataset. \cr
+If obsUniqueInTree = FALSE, the package will only keep all training observation in the dataset (no mater how many times they are in the BOP). 
+
 }
 \value{
 predict returns diference of estimation of Kaplan-Meier of treatment and control data in the terminal dataset.
@@ -86,6 +102,23 @@ obj <- HETSurv(f(T, G, C) ~ sex+age+obstruct+perfor+adhere+nodes+differ+extent+s
 pred <- predict(obj, data=dat,OOB = TRUE, obsUniqueInTree = TRUE)
 pred$predicted
 
+#prediction with new data
+newDataSize = 10
+set.seed(123456789)
+newData <- data.frame(sex=sample(c(0,1), replace=TRUE, size=newDataSize),
+                      age=sample(18:100, replace=TRUE, size=newDataSize),
+                      obstruct=sample(c(0,1), replace=TRUE, size=newDataSize),
+                      perfor=sample(c(0,1), replace=TRUE, size=newDataSize),
+                      adhere=sample(c(0,1), replace=TRUE, size=newDataSize),
+                      nodes=sample(1:25, replace=TRUE, size=newDataSize),
+                      differ=sample(1:3, replace=TRUE, size=newDataSize),
+                      extent=sample(1:4, replace=TRUE, size=newDataSize),
+                      surg=sample(c(0,1), replace=TRUE, size=newDataSize),
+                      node4=sample(c(0,1), replace=TRUE, size=newDataSize))
+
+
+pred <- predict(obj, newdata=newData,OOB = FALSE, obsUniqueInTree = TRUE)
+pred$predicted
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

@@ -681,11 +681,11 @@ get.grow.event.info <- function(yvar, fmly, need.deaths = TRUE, ntime) {
 	if (max(group) != 1 && min(group) != 0) {
 		stop("for incremental families group should be coded 0/1")
 	}
-	if (length(sort(unique(cens))) == 2 && sort(unique(cens)) != c(0,1))
+	if (length(sort(unique(cens))) == 2 && (sort(unique(cens))[1] != 0 || sort(unique(cens))[2] != 1))
 	{
 		stop("for incremental families censoring should be coded 0 or 1")
 	}
-	if (length(sort(unique(group))) == 2 && sort(unique(group)) != c(0,1))
+	if (length(sort(unique(group))) == 2 && (sort(unique(group))[1] != 0 || sort(unique(group))[2] != 1))
 	{
 		stop("for incremental families group should be coded 0 or 1")
 	}
@@ -747,11 +747,11 @@ get.grow.event.info <- function(yvar, fmly, need.deaths = TRUE, ntime) {
 	if (max(group) != 1 && min(group) != 0) {
 		stop("for incremental families group should be coded 0/1")
 	}
-	if (length(sort(unique(cens))) == 2 && sort(unique(cens)) != c(0,1))
+  if (length(sort(unique(cens))) == 2 && (sort(unique(cens))[1] != 0 || sort(unique(cens))[2] != 1))
 	{
 		stop("for incremental families censoring should be coded 0 or 1")
 	}
-	if (length(sort(unique(group))) == 2 && sort(unique(group)) != c(0,1))
+    if (length(sort(unique(group))) == 2 && (sort(unique(group))[1] != 0 || sort(unique(group))[2] != 1))
 	{
 		stop("for incremental families group should be coded 0 or 1")
 	}

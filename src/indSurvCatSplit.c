@@ -103,7 +103,7 @@ int CalculateSurvCatSplit(double * dataT,double * dataC, double * dataG, char * 
 	  res = CalculateSurvCatOneClassSplit(dataT, dataC, dataG, indCut, NodeNbrObrservation, LEFT, ClassI, nbrObsMinInTreatmentClass, &TLeft_Tr, &SLeft_Tr, &SNbrLeft_Tr);
 	  if (res == 1)
 	  {
-		double val = NewCompare2KaplanMaier(TLeft_Control, SLeft_Control, SNbrLeft_Control, SNbrLeft_Control, TLeft_Tr, SLeft_Tr, SNbrLeft_Tr, SNbrLeft_Tr,incTailType, &CumulDiff, &CumulDiffBrut, &CumulT, &MaxT, &UsedMaxT, &IntegralLeft, &IntegralRight);
+		  double val = NewCompare2KaplanMaier(TLeft_Control, SLeft_Control, SNbrLeft_Control, SNbrLeft_Control, TLeft_Tr, SLeft_Tr, SNbrLeft_Tr, SNbrLeft_Tr,incTailType, &CumulDiff, &CumulDiffBrut, &CumulT, &MaxT, &UsedMaxT, &IntegralLeft, &IntegralRight);
 	    if ((*maxClassLeft) == 0)
 	    {	
 	      (*TauMaxLeft) = CumulDiff;
@@ -117,12 +117,13 @@ int CalculateSurvCatSplit(double * dataT,double * dataC, double * dataG, char * 
 	        (*maxClassLeft) = ClassI;
 	      }
 	    }
+	    if (val == 1) {}
 	  }
 	  
 	  res = CalculateSurvCatOneClassSplit(dataT, dataC, dataG, indCut, NodeNbrObrservation, RIGHT, ClassI, nbrObsMinInTreatmentClass, &TRight_Tr, &SRight_Tr, &SNbrRight_Tr);
 	  if (res == 1)
 	  {
-		double val = NewCompare2KaplanMaier(TRight_Control, SRight_Control, SNbrRight_Control, SNbrRight_Control, TRight_Tr, SRight_Tr, SNbrRight_Tr, SNbrRight_Tr,incTailType, &CumulDiff, &CumulDiffBrut, &CumulT, &MaxT, &UsedMaxT, &IntegralLeft, &IntegralRight);
+		  double val = NewCompare2KaplanMaier(TRight_Control, SRight_Control, SNbrRight_Control, SNbrRight_Control, TRight_Tr, SRight_Tr, SNbrRight_Tr, SNbrRight_Tr,incTailType, &CumulDiff, &CumulDiffBrut, &CumulT, &MaxT, &UsedMaxT, &IntegralLeft, &IntegralRight);
 	    if ((*maxClassRigth) == 0)
 	    {
 	      (*TauMaxRight) = CumulDiff;
@@ -136,6 +137,7 @@ int CalculateSurvCatSplit(double * dataT,double * dataC, double * dataG, char * 
 	        (*maxClassRigth) = ClassI;
 	      }
 	    }
+	    if (val == 1) {}
 	  }
 	  
 		free(TLeft_Tr);
