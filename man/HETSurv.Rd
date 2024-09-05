@@ -106,7 +106,7 @@ datrain=dat[1:(nrow(dat)-50),]
 datest=dat[(nrow(dat)-50+1):nrow(dat),]
 
 # build forest
-obj <- HETSurv(f(T, G, C) ~ sex+age+obstruct+perfor+adhere+nodes+differ+extent+surg+node4, data = datrain ,ntree = 100,samptype ="swr")
+obj <- HETSurv(f(T, C, G) ~ sex+age+obstruct+perfor+adhere+nodes+differ+extent+surg+node4, data = datrain ,ntree = 100,samptype ="swr")
 
 # prediction for the training data
 pred <- predict(obj, data=dat,OOB = TRUE, obsUniqueInTree = TRUE)
