@@ -20,7 +20,7 @@ HETSurv(formula,
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{formula}{
-Formula in the form f(response, treatment) ~ covariates 
+Formula in the form f(response, censoring indicator, treatment) ~ covariates 
 }
   \item{data}{
 Data frame used for building the trees.
@@ -47,7 +47,7 @@ Other arguments used in the rfsrc function from the randomForestSRC package vers
 \details{
 
 Refer to the article below for more details. This is the method called ITE SRF in the article. \cr
-We have a binary treatment W (a value of 0 represents a control and a value of 1 represents a treatment) and a survival response Y. The CATE (or ITE for individual treatment effect) is defined by tau(x) = E[Y | X=x,W=1] -  E[Y | X=x,W=0].\cr
+We have a binary treatment W (a value of 0 represents a control and a value of 1 represents a treatment) and a survival response Y. The censoring indicator takes a value of 1 for events and 0 for censored observations. The CATE (or ITE for individual treatment effect) is defined by tau(x) = E[Y | X=x,W=1] -  E[Y | X=x,W=0].\cr
 Trees are built using the RandomForestSRC package and leveraging its custom split rule feature. \cr
 The estimated expected survival times are obtained by integrating the Kaplan-Meier (KM) estimates. Since a KM estimate can sometimes be undefined past a certain value, the argument incremental.tailType controls what to do in this case. When set to 1, an estimated exponential tail is used to complete the KM.\cr
 The arguments incremental.minObsControl, incremental.minObsTreatment, incremental.TreatmentLowBound, incremental.TreatmentUpperBound control the number of control and treatment observations in each node to make sure there are enough of each group since expected survival times for the control and treatment groups are estimated separately in each node.  \cr
@@ -55,7 +55,7 @@ Predictions from a fitted forest return estimated values for tau(x). \cr
 When making prediction two arguments can be used : \cr
 
 OOB = TRUE or FALSE\cr
-This argument defines how the Bag of prediction (BOP) will be constructed. The BOP is the set of locally similar observations from the training data that we use to estimate tau(x). \cr
+This argument defines how the Bag of Observations for Prediction (BOP) will be constructed. The BOP is the set of locally similar observations from the training data that we use to estimate tau(x). \cr
 If OOB = TRUE, only the tree's out of bag observations are used to construct the BOP. \cr
 If OOB = FALSE, the In-Bag observations are used to construct the BOP.\cr
 

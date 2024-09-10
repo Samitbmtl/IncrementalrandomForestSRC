@@ -41,7 +41,7 @@ Predictions from a fitted forest return estimated values for tau(x).  \cr
 When making prediction two arguments can be used : \cr
 
 OOB = TRUE or FALSE\cr
-This argument defines how the Bag of prediction (BOP) will be constructed. The BOP is the set of locally similar observations from the training data that we use to estimate tau(x). \cr
+This argument defines how the Bag of Observations for Prediction (BOP) will be constructed. The BOP is the set of locally similar observations from the training data that we use to estimate tau(x). \cr
 If OOB = TRUE, only the tree's out of bag observations are used to construct the BOP. \cr
 If OOB = FALSE, the In-Bag observations are used to construct the BOP.\cr
 
