@@ -991,172 +991,39 @@ generic.predict.irfsrc <-
 	}
   if (irfsrcOutput$family == "HET" || irfsrcOutput$family == "indLSC" || irfsrcOutput$family == "indTSTC" || irfsrcOutput$family == "indTST2C" || irfsrcOutput$family == "indMaxLC" || irfsrcOutput$family == "indNSRC" || irfsrcOutput$family == "indMOB0C" || irfsrcOutput$family == "CMB")
   {
-    predicted <- iextractBeta(Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag,!(OOB),obsUniqueInTree)$b1lin
+    Betas <- iextractBeta(Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag,!(OOB),obsUniqueInTree)
+    predicted <- Betas$b1lin
+    
   }
   if (irfsrcOutput$family == "indQuadC" || irfsrcOutput$family == "indQuad2C" || irfsrcOutput$family == "indMOBQC"  || irfsrcOutput$family == "indMaxQC" || irfsrcOutput$family == "indMaxMaxQC")
   {
-    predicted <- get.max.effect(iextractBeta(Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag,!(OOB),obsUniqueInTree))
+    Betas <- iextractBeta(Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag,!(OOB),obsUniqueInTree)
+    predicted <- get.max.effect(Betas)
   }
 
   if (irfsrcOutput$family == "indCat")
   {
     predicted <- fun_pred_Categorical(iextractBBOP(Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag,!(OOB),obsUniqueInTree))
   }
-	# if (grepl("indLinearC", irfsrcOutput$family))
-	# {
-	#   #print("C Ok")
-	#   	  no_cores <-parallel::detectCores()
-	#   	  cl_compile<- parallel::makeCluster(no_cores)
-	#   	  #predicted <- parallel::parSapply(cl_compile,1:1, fun_pred_5beta,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)
-	#   	  #predicted <- parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_indLinearC,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)
-	#   	  predicted <- data.frame(t(parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_5beta,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)))
-	#   	  #names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad","N_b0int","N_b0lin","N_b1lin","N_b0quad","N_b1quad","N_b2quad")
-	#   	  names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad")
-	#   	  parallel::stopCluster(cl_compile)
-	#   	  #print("R Ok")
-	# }
-	# if (grepl("indQuadC", irfsrcOutput$family))
-	# {
-	#   #print("C Ok")
-	#   	  no_cores <-parallel::detectCores()
-	#   	  cl_compile<- parallel::makeCluster(no_cores)
-	#   	  #predicted <- parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_indQuadC,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)
-	#   	  predicted <- data.frame(t(parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_5beta,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)))
-	#   	  #names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad","N_b0int","N_b0lin","N_b1lin","N_b0quad","N_b1quad","N_b2quad")
-	#   	  names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad")
-	#   	  parallel::stopCluster(cl_compile)
-	#   	  #print("R Ok")
-	# }
-	# if (grepl("indQuad2C", irfsrcOutput$family))
-	# {
-	#   #print("C Ok")
-	#   	  no_cores <-parallel::detectCores()
-	#   	  cl_compile<- parallel::makeCluster(no_cores)
-	#   	  #predicted <- parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_indQuad2C,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)
-	#   	  predicted <- data.frame(t(parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_5beta,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)))
-	#   	  #names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad","N_b0int","N_b0lin","N_b1lin","N_b0quad","N_b1quad","N_b2quad")
-	#   	  names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad")
-	#   	  parallel::stopCluster(cl_compile)
-	#   	  #print("R Ok")
-	# }
-	# if (grepl("indLSC", irfsrcOutput$family))
-	# {
-	#   #print("C Ok")
-	# 	no_cores <-parallel::detectCores()
-	# 	cl_compile<- parallel::makeCluster(no_cores)
-	# 	#predicted <- parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_indQuad2C,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)
-	# 	predicted <- data.frame(t(parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_5beta,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)))
-	# 	#names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad","N_b0int","N_b0lin","N_b1lin","N_b0quad","N_b1quad","N_b2quad")
-	# 	names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad")
-	# 	parallel::stopCluster(cl_compile)
-	# 	#print("R Ok")
-	# }
-	# if (grepl("indTSTC", irfsrcOutput$family) || grepl("indTST2C", irfsrcOutput$family))
-	# {
-	#   #print("C Ok")
-	# 	no_cores <-parallel::detectCores()
-	# 	cl_compile<- parallel::makeCluster(no_cores)
-	# 	#predicted <- parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_indQuad2C,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)
-	# 	predicted <- data.frame(t(parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_5beta,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)))
-	# 	#names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad","N_b0int","N_b0lin","N_b1lin","N_b0quad","N_b1quad","N_b2quad")
-	# 	names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad")
-	# 	parallel::stopCluster(cl_compile)
-	# 	#print("R Ok")
-	# }
-	# if (grepl("indNSRC", irfsrcOutput$family))
-	# {
-	#   #print("C Ok")
-	# 	no_cores <-parallel::detectCores()
-	# 	cl_compile<- parallel::makeCluster(no_cores)
-	# 	#predicted <- parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_indQuad2C,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)
-	# 	predicted <- data.frame(t(parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_5beta,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)))
-	# 	#names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad","N_b0int","N_b0lin","N_b1lin","N_b0quad","N_b1quad","N_b2quad")
-	# 	names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad")
-	# 	parallel::stopCluster(cl_compile)
-	# 	#print("R Ok")
-	# }
-	# if (grepl("indMOB0C", irfsrcOutput$family))
-	# {
-	#   #print("C Ok")
-	# 	no_cores <-parallel::detectCores()
-	# 	cl_compile<- parallel::makeCluster(no_cores)
-	# 	#predicted <- parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_indQuad2C,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)
-	# 	predicted <- data.frame(t(parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_5beta,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)))
-	# 	#names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad","N_b0int","N_b0lin","N_b1lin","N_b0quad","N_b1quad","N_b2quad")
-	# 	names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad")
-	# 	parallel::stopCluster(cl_compile)
-	# 	#print("R Ok")
-	# }
-	# if (grepl("indMOBLC", irfsrcOutput$family))
-	# {
-	#   #print("C Ok")
-	# 	no_cores <-parallel::detectCores()
-	# 	cl_compile<- parallel::makeCluster(no_cores)
-	# 	#predicted <- parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_indQuad2C,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)
-	# 	predicted <- data.frame(t(parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_5beta,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)))
-	# 	#names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad","N_b0int","N_b0lin","N_b1lin","N_b0quad","N_b1quad","N_b2quad")
-	# 	names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad")
-	# 	parallel::stopCluster(cl_compile)
-	# 	#print("R Ok")
-	# }
-	# if (grepl("indMOBQC", irfsrcOutput$family))
-	# {
-	#   #print("C Ok")
-	# 	no_cores <-parallel::detectCores()
-	# 	cl_compile<- parallel::makeCluster(no_cores)
-	# 	#predicted <- parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_indQuad2C,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)
-	# 	predicted <- data.frame(t(parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_5beta,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)))
-	# 	#names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad","N_b0int","N_b0lin","N_b1lin","N_b0quad","N_b1quad","N_b2quad")
-	# 	names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad")
-	# 	parallel::stopCluster(cl_compile)
-	# 	#print("R Ok")
-	# }
-	# if (grepl("indMaxLC", irfsrcOutput$family))
-	# {
-	#   #print("C Ok")
-	# 	no_cores <-parallel::detectCores()
-	# 	cl_compile<- parallel::makeCluster(no_cores)
-	# 	#predicted <- parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_indQuad2C,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)
-	# 	predicted <- data.frame(t(parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_5beta,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)))
-	# 	#names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad","N_b0int","N_b0lin","N_b1lin","N_b0quad","N_b1quad","N_b2quad")
-	# 	names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad")
-	# 	parallel::stopCluster(cl_compile)
-	# 	#print("R Ok")
-	# }
-	# if (grepl("indMaxQC", irfsrcOutput$family))
-	# {
-	#   #print("C Ok")
-	# 	no_cores <-parallel::detectCores()
-	# 	cl_compile<- parallel::makeCluster(no_cores)
-	# 	#predicted <- parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_indQuad2C,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)
-	# 	predicted <- data.frame(t(parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_5beta,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)))
-	# 	#names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad","N_b0int","N_b0lin","N_b1lin","N_b0quad","N_b1quad","N_b2quad")
-	# 	names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad")
-	# 	parallel::stopCluster(cl_compile)
-	# 	#print("R Ok")
-	# }
-	# if (grepl("indMaxMaxQC", irfsrcOutput$family))
-	# {
-	#   #print("C Ok")
-	# 	no_cores <-parallel::detectCores()
-	# 	cl_compile<- parallel::makeCluster(no_cores)
-	# 	#predicted <- parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_indQuad2C,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)
-	# 	predicted <- data.frame(t(parallel::parSapply(cl_compile,1:nrow(irfsrcOutput$membership), fun_pred_5beta,Objyvar,ObjMembership,irfsrcOutput$membership,Objinbag)))
-	# 	#names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad","N_b0int","N_b0lin","N_b1lin","N_b0quad","N_b1quad","N_b2quad")
-	# 	names(predicted) <- c("b0int","b0lin","b1lin","b0quad","b1quad","b2quad")
-	# 	parallel::stopCluster(cl_compile)
-	# 	#print("R Ok")
-	# }
+	
 	remove(ObjMembership)
 	remove(Objinbag)
 	remove(Objyvar)
 	remove(Objxvar)
 	
-    survOutput = c(survOutput, predicted = list(predicted))
-    remove(predicted)
+  survOutput = c(survOutput, predicted = list(predicted))
+  remove(predicted)
+
+	if (exists("Betas"))
+	{
+		survOutput = c(survOutput, Betas = list(Betas))
+		remove(Betas)
+	}
+	
+  
     predicted.oob <- (if (!is.null(nativeOutput$oobEnsbMRT))
-                        adrop2d.last(array(nativeOutput$oobEnsbMRT,
-                                           c(n.observed, length(event.info$event.type)), dimnames=mortality.names), coerced.event.count) else NULL)
+                      adrop2d.last(array(nativeOutput$oobEnsbMRT,
+                                         c(n.observed, length(event.info$event.type)), dimnames=mortality.names), coerced.event.count) else NULL)
     nativeOutput$oobEnsbMRT <- NULL
 	##Sami
 	if (grepl("IndSurvB", irfsrcOutput$family) || grepl("HET", irfsrcOutput$family) || grepl("indQuadC", irfsrcOutput$family) || grepl("indQuad2C", irfsrcOutput$family) || grepl("indLSC", irfsrcOutput$family) || grepl("indTSTC", irfsrcOutput$family) || grepl("indTST2C", irfsrcOutput$family) || grepl("indNSRC", irfsrcOutput$family)  || grepl("indMOB0C", irfsrcOutput$family) || grepl("CMB", irfsrcOutput$family) || grepl("indMOBQC", irfsrcOutput$family) || grepl("indMaxLC", irfsrcOutput$family) || grepl("indMaxQC", irfsrcOutput$family) || grepl("indMaxMaxQC", irfsrcOutput$family) || grepl("indCat", irfsrcOutput$family) || grepl("IndSurvCat", irfsrcOutput$family))
